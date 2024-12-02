@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 import random
 import time
 
@@ -40,14 +39,14 @@ def reset_tickets():
 # Title and introduction
 st.title("🎶 Anugerah Malaysia Live 2024")
 st.subheader("Featuring Siti Nurhaliza, Yuna, and Faizal Tahir")
-st.write("""
+st.write(""" 
 **📅 Date**: 25th December 2024  
 **📍 Venue**: Bukit Jalil National Stadium  
 Secure your spot for this unforgettable concert! Choose your ticket category below and book now!  
 """)
 
-# Display a smaller concert image
-st.image("https://i.imgflip.com/41aizo.jpg", use_column_width=False, width=400)
+# Display a much smaller concert image
+st.image("https://i.imgflip.com/41aizo.jpg", width=400)  # Smaller width value
 
 # Ticket categories and prices section
 st.header("🎫 Ticket Categories")
@@ -67,15 +66,16 @@ for category, price in ticket_prices.items():
         key=f"quantity_{category}",
     )
 
-# Ticket Overview and Visualization
+# Ticket Overview without Plotly (using basic text summary)
 st.header("📊 Ticket Overview")
 data = {
     "Category": list(st.session_state["ticket_quantities"].keys()),
     "Tickets": list(st.session_state["ticket_quantities"].values()),
 }
 df = pd.DataFrame(data)
-fig = px.bar(df, x="Category", y="Tickets", title="Ticket Selection Overview")
-st.plotly_chart(fig, use_container_width=True)
+
+# Display the ticket selection summary as text
+st.write(df.to_string(index=False))
 
 # Sidebar summary
 st.sidebar.title("📊 Booking Summary")
